@@ -4,7 +4,7 @@
 [![Expo Version](https://img.shields.io/badge/expo-%5E42.0.0-blue.svg)](https://docs.expo.io/)
 
 server repo (nodejs):
-https://github.com/muja555/ephi-server-test-assigment/
+https://github.com/muja555/ephi-server-test-assigment
 
 mobile repo (expo):
 https://github.com/muja555/ephi-expo-test-assigment

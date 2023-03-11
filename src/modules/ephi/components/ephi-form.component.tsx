@@ -43,7 +43,7 @@ const schema: IFormSchema = {
     birthday: Joi.date().required(),
     health_plan: Joi.number().required(),
     phone: Joi.string().required(),
-    email: Joi.string().required(),
+    email: Joi.string().pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/).required(),
     ssn: Joi.number().required(),
     mrn: Joi.number().required(),
 };

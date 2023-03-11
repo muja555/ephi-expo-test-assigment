@@ -17,7 +17,7 @@ export class UserEphiIdUpdate {
         };
 
 
-        const response = await fetch(`${BASE_URL}/users/${this.user_id}`, requestOptions);
+        const response = await fetch(`${BASE_URL}/users/${this.user_id}/ephi`, requestOptions);
         if (!response.ok) {
             throw new Error(await response.text());
         }

@@ -5,6 +5,7 @@ import {KeyboardAvoidingView, Platform, ScrollView, Text, TouchableOpacity, View
 import TextField from "core/inputs/text-field/text-field.component";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import Joi, {AnySchema} from "joi";
+import {formatDate} from "core/others/utils";
 
 type EphiFormProps = {
     ephi: IEphi | null,
@@ -60,6 +61,7 @@ const initialValues: IEphiFormValues = {
     mrn: null,
 }
 
+const FLOATING_DATEPICKER = Platform.OS === 'android';
 const EphiForm: FC<PropsWithChildren<EphiFormProps>> = (props) => {
 
     const {
@@ -70,6 +72,7 @@ const EphiForm: FC<PropsWithChildren<EphiFormProps>> = (props) => {
 
     const [formValues, formValuesSet] = useState<IEphiFormValues>(initialValues);
     const [errorMessages, errorMessagesSet] = useState<IFormErrors>({});
+    const [showDatePicker, showDatePickerSet] = useState(!FLOATING_DATEPICKER);
 
 
     useEffect(() => {
@@ -104,6 +107,15 @@ const EphiForm: FC<PropsWithChildren<EphiFormProps>> = (props) => {
         }));
     }
 
+    const onDatePickerChange = (date: Date) => {
+
+        if (FLOATING_DATEPICKER) {
+            showDatePickerSet(false);
+        }
+
+        onFormFieldChange('birthday', date);
+    }
+
     const validate = () => {
 
         const _errors: IFormErrors = {};
@@ -134,6 +146,7 @@ const EphiForm: FC<PropsWithChildren<EphiFormProps>> = (props) => {
         }
     }
 
+    const birthdayFormatted = formatDate(formValues.birthday);
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={style.content}>
@@ -148,13 +161,24 @@ const EphiForm: FC<PropsWithChildren<EphiFormProps>> = (props) => {
                            errorMessage={errorMessages.last_name}
                            onChangeText={(text) => onFormFieldChange('last_name', text)}/>
                 <View style={{height: 10}}/>
-                <Text style={style.label}>Birthday</Text>
-                <RNDateTimePicker
-                    mode={'date'}
-                    value={formValues.birthday}
-                    onChange={(event, date) => onFormFieldChange('birthday', date || new Date())}
-                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                />
+                <Text style={style.label}>{"Birthday: " + birthdayFormatted}</Text>
+                {
+                    (showDatePicker)  &&
+                    <RNDateTimePicker
+                        mode={'date'}
+                        value={formValues.birthday}
+                        onChange={(event, date) => onDatePickerChange( date || new Date())}
+                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                    />
+                }
+                {
+                    (FLOATING_DATEPICKER) &&
+                    <TouchableOpacity style={style.showDatePickerBtn} onPress={() => showDatePickerSet(show => !show)}>
+                        <Text>
+                            Choose date:
+                        </Text>
+                    </TouchableOpacity>
+                }
                 <View style={{height: 10}}/>
                 <TextField label={'Phone'}
                            value={formValues.phone || ''}

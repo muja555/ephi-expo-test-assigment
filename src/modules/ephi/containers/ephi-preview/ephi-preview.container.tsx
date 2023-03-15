@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {
     MainStackNavigatorParamList
 } from "modules/navigator/components/main-stack-navigator/main-stack-navigator.component";
+import {formatDate} from "core/others/utils";
 
 type EphiPreviewContainerProps = {};
 
@@ -52,6 +53,8 @@ const EphiPreviewContainer: FC<PropsWithChildren<EphiPreviewContainerProps>> = (
         navigation.push(MainStackNavs.EPHI_FORM, {ephi: ephi});
     }
 
+
+    const birthdayFormatted = formatDate(ephi?.birthday);
 
     return (
         <SafeAreaView style={style.container}>
@@ -110,7 +113,7 @@ const EphiPreviewContainer: FC<PropsWithChildren<EphiPreviewContainerProps>> = (
                                 {' '}
                             </Text>
                             <Text>
-                                {new Date(ephi.birthday).toLocaleDateString('en-US')}
+                                {birthdayFormatted}
                             </Text>
                         </View>
                         <View style={{height: 10}}/>

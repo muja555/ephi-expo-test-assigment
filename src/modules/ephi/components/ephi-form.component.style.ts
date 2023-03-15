@@ -31,6 +31,16 @@ const ephiFormStyle = StyleSheet.create({
         fontSize: 15,
         marginStart: 8,
     },
+    showDatePickerBtn: {
+        width: '50%',
+        height: 45,
+        borderRadius: 8,
+        backgroundColor: Colors.Primary,
+        borderColor: Colors.Secondary,
+        borderWidth: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 })
 export { ephiFormStyle as ephiFormStyle };
 
